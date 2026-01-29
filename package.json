@@ -11,13 +11,15 @@
     "lint": "eslint",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write",
+    "*.{js,jsx,ts,tsx}": "eslint --fix"
+  },
   "dependencies": {
+    "@clerk/nextjs": "^6.37.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
