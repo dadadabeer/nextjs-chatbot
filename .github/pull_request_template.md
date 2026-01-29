@@ -1,6 +1,3 @@
-## Jira issue link
-https://aisg-products.atlassian.net/browse/
-
 ## Type of change
 - [ ] New feature
 - [ ] Bug fix
