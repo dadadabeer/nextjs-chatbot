@@ -1,4 +1,5 @@
 ## Type of change
+
 - [ ] New feature
 - [ ] Bug fix
 - [ ] Test
@@ -9,18 +10,23 @@
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 
 ## Description
+
 Describe the objective (why) and approach (how).
 
 ## Dependencies
+
 List any dependencies that are required for the changes.
 
 ## Screenshots
+
 Include screenshots, when applicable, to illustrate the changes.
 
 ## How Has This Been Tested?
+
 Please describe the tests that you ran to verify your changes.
 
 ## Checklist
+
 - [ ] I performed a self-review of my code
 - [ ] I confirmed that my code is performant, secure and reusable
 - [ ] I ensured that my code includes robust data validation and error handling
