@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
+import { SessionProvider } from 'next-auth/react'
+import AuthButtons from '@/components/auth-buttons'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -24,7 +26,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <SessionProvider>
+          <header className="flex items-center justify-between border-b p-4">
+            <h2 className="text-xl font-bold">NextJS Chatbot</h2>
+            <AuthButtons />
+          </header>
+          <main>{children}</main>
+        </SessionProvider>
+      </body>
     </html>
   )
 }

@@ -1,3 +1,8 @@
 export default function Home() {
-  return <div>Welcome to NextJS Chatbot</div>
+  return (
+    <div>
+      <h1>Welcome to NextJS Chatbot</h1>
+      <p>Sign in to start chatting</p>
+    </div>
+  )
 }
