@@ -1,3 +1,47 @@
+'use client'
+
+import { useState } from 'react'
+
 export default function Chat() {
-  return <div>You can chat to me only if you are authorized (logged in)</div>
+  const [inputValue, setInputValue] = useState('')
+  const [apiResponse, setApiResponse] = useState<{
+    output: { content: string; role: string }
+  } | null>(null)
+  const handleClick: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: 'user',
+              content: inputValue,
+            },
+          ],
+        }),
+      })
+      const data = await response.json()
+      setApiResponse(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return (
+    <>
+      <form onSubmit={handleClick}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Chat with me today"
+          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </form>
+      {apiResponse && <p> {apiResponse.output.content} </p>}
+      <div>You can chat to me only if you are authorized (logged in)</div>
+    </>
+  )
 }
