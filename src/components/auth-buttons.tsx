@@ -5,7 +5,7 @@ import SignIn from './sign-in'
 import { SignOut } from './sign-out'
 
 export default function AuthButtons() {
-  const { data, status } = useSession()
+  const { data } = useSession()
 
   if (data) {
     return (
