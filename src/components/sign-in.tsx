@@ -3,8 +3,8 @@
 import { signIn } from 'next-auth/react'
 
 export default function SignIn() {
-  const isDev = process.env.NODE_ENV === 'development'
-  if (isDev) {
+  const isCredentialsMode = process.env.NEXT_PUBLIC_AUTH_MODE === 'credentials'
+  if (isCredentialsMode) {
     const credentialsAction = (formData: FormData) => {
       const email = formData.get('email') as string
       const password = formData.get('password') as string
