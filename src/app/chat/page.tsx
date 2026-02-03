@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 
-export default function Chat() {
+export default function ChatPage() {
   const [inputValue, setInputValue] = useState('')
   const [apiResponse, setApiResponse] = useState<{
     output: { content: string; role: string }
   } | null>(null)
-  const handleClick: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleClick = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const response = await fetch('/api/chat', {
@@ -41,7 +41,6 @@ export default function Chat() {
         />
       </form>
       {apiResponse && <p> {apiResponse.output.content} </p>}
-      <div>You can chat to me only if you are authorized (logged in)</div>
     </>
   )
 }
