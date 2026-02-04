@@ -14,7 +14,6 @@ export async function POST(req: Request) {
     messages: body.messages,
   })
 
-  console.log(completion.choices[0].message)
   const theResponse = completion.choices[0].message
 
   return NextResponse.json({ output: theResponse }, { status: 200 })

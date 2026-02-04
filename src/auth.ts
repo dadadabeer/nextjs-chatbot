@@ -3,7 +3,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { signInSchema } from './utils/zod'
 import Google from 'next-auth/providers/google'
 
-const isCredentialsMode = process.env.NEXT_PUBLIC_AUTH_MODE === 'credentials'
+const IS_CREDENTIALS_MODE = process.env.NEXT_PUBLIC_AUTH_MODE === 'credentials'
 
 const TEST_USER = {
   id: '1',
@@ -14,7 +14,7 @@ const TEST_USER = {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
-  providers: isCredentialsMode
+  providers: IS_CREDENTIALS_MODE
     ? [
         Credentials({
           credentials: {

@@ -4,11 +4,13 @@ import { useState } from 'react'
 
 export default function ChatPage() {
   const [inputValue, setInputValue] = useState('')
+  const [error, setError] = useState<string | null>(null)
   const [apiResponse, setApiResponse] = useState<{
     output: { content: string; role: string }
   } | null>(null)
   const handleClick = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError(null)
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -25,7 +27,7 @@ export default function ChatPage() {
       const data = await response.json()
       setApiResponse(data)
     } catch (error) {
-      console.error(error)
+      setError('Failed to send message')
     }
   }
 
@@ -41,6 +43,7 @@ export default function ChatPage() {
         />
       </form>
       {apiResponse && <p> {apiResponse.output.content} </p>}
+      {error && <p className="text-red-500">{error}</p>}
     </>
   )
 }
