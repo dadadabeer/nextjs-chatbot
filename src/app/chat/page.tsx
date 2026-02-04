@@ -24,6 +24,9 @@ export default function ChatPage() {
           ],
         }),
       })
+      if (!response.ok) {
+        throw new Error('API request failed')
+      }
       const data = await response.json()
       setApiResponse(data)
     } catch (error) {

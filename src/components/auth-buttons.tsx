@@ -1,18 +1,22 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import SignIn from './sign-in'
 import { SignOut } from './sign-out'
+import Link from 'next/link'
 
 export default function AuthButtons() {
   const { data } = useSession()
 
   if (data) {
     return (
-      <div>
+      <div className="flex items-center">
+        <Link href="/" className="mr-4">
+          {' '}
+          Home{' '}
+        </Link>
         <SignOut />
       </div>
     )
   }
-  return <SignIn />
+  return null
 }

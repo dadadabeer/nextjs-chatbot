@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import { signInSchema } from './utils/zod'
+import { signInSchema } from './lib/zod'
 import Google from 'next-auth/providers/google'
 
 const IS_CREDENTIALS_MODE = process.env.NEXT_PUBLIC_AUTH_MODE === 'credentials'
