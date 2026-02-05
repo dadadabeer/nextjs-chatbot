@@ -1,8 +1,9 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
-import SignIn from '@/components/sign-in'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+
+import SignIn from '@/components/sign-in'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {

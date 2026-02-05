@@ -29,7 +29,7 @@ export default function ChatPage() {
       }
       const data = await response.json()
       setApiResponse(data)
-    } catch (error) {
+    } catch {
       setError('Failed to send message')
     }
   }
