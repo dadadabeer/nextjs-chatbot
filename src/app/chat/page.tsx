@@ -2,15 +2,20 @@
 
 import { useState } from 'react'
 
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+
 export default function ChatPage() {
   const [inputValue, setInputValue] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [apiResponse, setApiResponse] = useState<{
     output: { content: string; role: string }
   } | null>(null)
+
   const handleClick = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -24,29 +29,42 @@ export default function ChatPage() {
           ],
         }),
       })
+
       if (!response.ok) {
         throw new Error('API request failed')
       }
+
       const data = await response.json()
       setApiResponse(data)
-    } catch (error) {
+      setInputValue('')
+    } catch {
       setError('Failed to send message')
     }
   }
 
   return (
-    <>
-      <form onSubmit={handleClick}>
-        <input
-          type="text"
+    <div className="container mx-auto max-w-3xl p-4">
+      <div className="mb-4 min-h-[400px] space-y-4">
+        {apiResponse && (
+          <div className="bg-muted rounded-lg p-4">
+            <p className="whitespace-pre-wrap">{apiResponse.output.content}</p>
+          </div>
+        )}
+      </div>
+      <form onSubmit={handleClick} className="space-y-2">
+        <Textarea
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Chat with me today"
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="Type your message here..."
+          rows={3}
         />
+        <div className="flex items-center gap-2">
+          <Button type="submit" disabled={!inputValue.trim()}>
+            Send Message
+          </Button>
+          {error && <p className="text-sm text-red-500">{error}</p>}
+        </div>
       </form>
-      {apiResponse && <p> {apiResponse.output.content} </p>}
-      {error && <p className="text-red-500">{error}</p>}
-    </>
+    </div>
   )
 }
