@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 
-import AuthButtons from '@/components/auth-buttons'
+import AuthButtons from '@/containers/auth-buttons'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
