@@ -3,11 +3,6 @@ import OpenAI from 'openai'
 
 import logger, { getErrorMessageForLogger } from '@/lib/logger'
 
-if (!process.env.SEALION_API_KEY) {
-  logger.error('SEALION_API_KEY is not configured')
-  throw new Error('Server misconfiguration: Missing SEALION_API_KEY')
-}
-
 const client = new OpenAI({
   apiKey: process.env.SEALION_API_KEY,
   baseURL: 'https://api.sea-lion.ai/v1',
