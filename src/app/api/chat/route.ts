@@ -1,22 +1,25 @@
 import { NextResponse } from 'next/server'
-import OpenAI from 'openai'
 
 import logger, { getErrorMessageForLogger } from '@/lib/logger'
-
-const client = new OpenAI({
-  apiKey: process.env.SEALION_API_KEY,
-  baseURL: 'https://api.sea-lion.ai/v1',
-})
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const completion = await client.chat.completions.create({
-      model: 'aisingapore/Gemma-SEA-LION-v4-27B-IT',
-      messages: body.messages,
+    const response = await fetch('https://api.sea-lion.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        accept: 'text/plain',
+        Authorization: `Bearer ${process.env.SEALION_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'aisingapore/Gemma-SEA-LION-v4-27B-IT',
+        messages: body.messages,
+      }),
     })
-    const response = completion.choices[0].message
-    return NextResponse.json({ output: response }, { status: 200 })
+
+    const data = await response.json()
+    return NextResponse.json({ output: data.choices[0].message }, { status: 200 })
   } catch (error) {
     logger.error('Chat API error', {
       error: getErrorMessageForLogger(error),
