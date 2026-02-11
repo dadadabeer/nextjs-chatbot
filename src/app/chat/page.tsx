@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -46,8 +47,9 @@ export default function ChatPage() {
     <div className="container mx-auto max-w-3xl p-4">
       <div className="mb-4 min-h-[400px] space-y-4">
         {apiResponse && (
-          <div className="bg-muted rounded-lg p-4">
-            <p className="whitespace-pre-wrap">{apiResponse.output.content}</p>
+          //prose headings refers to all headings from the typography plugin convention
+          <div className="chat-response bg-muted prose prose-sm dark:prose-invert max-w-none rounded-lg p-4">
+            <ReactMarkdown>{apiResponse.output.content}</ReactMarkdown>
           </div>
         )}
       </div>
