@@ -1,9 +1,11 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import { signInSchema } from './utils/zod'
 import Google from 'next-auth/providers/google'
 
-const isCredentialsMode = process.env.NEXT_PUBLIC_AUTH_MODE === 'credentials'
+import logger, { getErrorMessageForLogger } from './lib/logger'
+import { signInSchema } from './lib/zod'
+
+const IS_CREDENTIALS_MODE = process.env.NEXT_PUBLIC_AUTH_MODE === 'credentials'
 
 const TEST_USER = {
   id: '1',
@@ -14,7 +16,7 @@ const TEST_USER = {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
-  providers: isCredentialsMode
+  providers: IS_CREDENTIALS_MODE
     ? [
         Credentials({
           credentials: {
@@ -32,7 +34,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 name: TEST_USER.name,
                 email: TEST_USER.email,
               }
-            } catch {
+            } catch (error) {
+              // Only log if it's NOT an invalid credentials error
+              if (!(error instanceof Error && error.message === 'Invalid credentials.')) {
+                logger.error('Unexpected auth error', {
+                  error: getErrorMessageForLogger(error),
+                })
+              }
               return null
             }
           },
