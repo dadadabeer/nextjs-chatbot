@@ -1,5 +1,43 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Google OAuth (Sign in with Google)
+
+If you get **401 invalid_client** or "The OAuth client was not found":
+
+1. **Google Cloud Console** → APIs & Services → Credentials → your **Web application** OAuth client.
+2. Copy the **Client ID** (ends in `.apps.googleusercontent.com`) and **Client secret**.
+3. In your **.env** (not .env.example), set:
+   - `AUTH_GOOGLE_ID=` paste the full Client ID (no spaces or quotes).
+   - `AUTH_GOOGLE_SECRET=` paste the Client secret.
+   - `NEXTAUTH_URL=http://localhost:3000` (or the URL you open in the browser; required when running in Docker).
+4. **Authorized redirect URIs** in the same OAuth client must include exactly: `http://localhost:3000/api/auth/callback/google`.
+5. If the app is in **Testing**, add your Google account under OAuth consent screen → Test users.
+6. When using Docker: run with `--env-file .env` so the container gets these variables.
+
+## Docker
+
+**Build the image:**
+
+```bash
+docker build -t nextjs-chatbot .
+```
+
+**Run the container:**
+
+```bash
+docker run -d -p 3000:3000 --env-file .env nextjs-chatbot
+```
+
+Then open [http://localhost:3000](http://localhost:3000).
+
+**Stop and remove the container:**
+
+```bash
+docker stop nextjs-chatbot && docker rm nextjs-chatbot
+```
+
+To run again after that, use the same `docker run` command above.
+
 ## Getting Started
 
 First, run the development server:
